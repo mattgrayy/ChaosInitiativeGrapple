@@ -143,8 +143,6 @@ namespace UnityStandardAssets.Vehicles.Car
             BrakeInput = footbrake = -1*Mathf.Clamp(footbrake, -1, 0);
             handbrake = Mathf.Clamp(handbrake, 0, 1);
 
-            Debug.Log(AccelInput + " -A-B- " + BrakeInput);
-
             //Set the steer on the front wheels.
             //Assuming that wheels 0 and 1 are the front wheels.
             m_SteerAngle = steering*m_MaximumSteerAngle;
