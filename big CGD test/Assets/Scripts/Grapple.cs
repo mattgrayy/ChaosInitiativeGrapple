@@ -10,6 +10,8 @@ public class Grapple : MonoBehaviour {
     Rigidbody rb;
 	public bool hit = false;
 
+    float distance = 0;
+
 	void Start ()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,14 +20,17 @@ public class Grapple : MonoBehaviour {
         rb.velocity += Vector3.up * 3;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (myCar != null && hit)
+        if (distance != 0 && Vector3.Distance(transform.parent.position, myCar.position) > distance - (distance/5))
         {
-            if (Vector3.Distance(transform.position, myCar.position) > 10)
-            {
-                //rb.velocity += (myCar.position - transform.position) / 10;
-            }
+            Vector3 targToCar = myCar.position - transform.parent.position;
+            targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
+            transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
+
+            //targToCar = transform.parent.position - myCar.position;
+            //targToCar = new Vector3(targToCar.x / 4, targToCar.y / 4, targToCar.z / 4);
+            //myCar.GetComponent<Rigidbody>().velocity += targToCar;
         }
     }
 
@@ -48,18 +53,10 @@ public class Grapple : MonoBehaviour {
         {
 			hit = true;
             rb.isKinematic = true;
+            GetComponent<Collider>().isTrigger = true;
             transform.parent = col.transform;
-            ConfigurableJoint hng = gameObject.AddComponent<ConfigurableJoint>();
-            hng.connectedBody = col.transform.GetComponent<Rigidbody>();
-            hng.xMotion = ConfigurableJointMotion.Locked;
-            hng.yMotion = ConfigurableJointMotion.Locked;
-            hng.zMotion = ConfigurableJointMotion.Locked;
 
-            JointDrive drive = new JointDrive();
-            drive.positionSpring = 20;
-            hng.xDrive = drive;
-            hng.yDrive = drive;
-            hng.zDrive = drive;
+            distance = Vector3.Distance(col.transform.position, myCar.position);
 
             makeChain();
         }
@@ -93,9 +90,12 @@ public class Grapple : MonoBehaviour {
             {
                 ConfigurableJoint hng = gameObject.AddComponent<ConfigurableJoint>();
                 hng.connectedBody = made.GetComponent<Rigidbody>();
+                hng.anchor = Vector3.zero;
                 hng.xMotion = ConfigurableJointMotion.Locked;
                 hng.yMotion = ConfigurableJointMotion.Locked;
                 hng.zMotion = ConfigurableJointMotion.Locked;
+                hng.angularZMotion = ConfigurableJointMotion.Locked;
+                hng.projectionMode = JointProjectionMode.PositionAndRotation;
             }
             lastMade = made;
 

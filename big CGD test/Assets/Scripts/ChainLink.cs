@@ -17,14 +17,12 @@ public class ChainLink : MonoBehaviour {
 	{
 		if(endChain && myCar != null)
 		{
-			Debug.Log ("Blap");
 			if(Vector3.Distance(transform.position, myCar.position + myCar.forward) > 0.01f)
 			{
 				Transform made = Instantiate (chainLink, myCar.position + myCar.forward, chainLink.rotation) as Transform;
 				made.parent = transform;
 				//made.GetComponent<ChainLink> ().myCar = myCar;
 				endChain = false;
-				Debug.Log ("blop");
 			}
 		}
 	}
