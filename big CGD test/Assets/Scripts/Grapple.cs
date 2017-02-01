@@ -16,21 +16,21 @@ public class Grapple : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
 
-        rb.velocity += transform.forward * 20;
-        rb.velocity += Vector3.up * 3;
+        rb.velocity += transform.forward * 8;
+        rb.velocity += Vector3.up * 2;
     }
 
     void FixedUpdate()
     {
-        if (distance != 0 && Vector3.Distance(transform.parent.position, myCar.position) > distance - (distance/5))
+		if (distance != 0 && Vector3.Distance(transform.parent.position, myCar.position) > distance)
         {
-            Vector3 targToCar = myCar.position - transform.parent.position;
-            targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
-            transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
+            //Vector3 targToCar = myCar.position - transform.parent.position;
+            //targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
+            //transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
 
-            //targToCar = transform.parent.position - myCar.position;
-            //targToCar = new Vector3(targToCar.x / 4, targToCar.y / 4, targToCar.z / 4);
-            //myCar.GetComponent<Rigidbody>().velocity += targToCar;
+            Vector3 targToCar = transform.position - myCar.position;
+            targToCar = new Vector3(targToCar.x / 20, targToCar.y / 20, targToCar.z / 20);
+            myCar.GetComponent<Rigidbody>().velocity += targToCar;
         }
     }
 
@@ -49,7 +49,7 @@ public class Grapple : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.transform.tag == "Draggable" && !hit)
+        if (/*col.transform.tag == "Draggable" &&*/ !hit)
         {
 			hit = true;
             rb.isKinematic = true;

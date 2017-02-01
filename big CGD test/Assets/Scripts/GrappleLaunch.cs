@@ -18,14 +18,14 @@ public class GrappleLaunch : MonoBehaviour {
 
     void fireGrapple()
     {
-		if(grappled)
-		{
+		if (grappled) {
 			currentGrapple.GetComponent<Grapple> ().removeChildren ();
 			Destroy (currentGrapple.gameObject);
+			grappled = false;
+		} else {
+			grappled = true;
+			currentGrapple = Instantiate (grapple, transform.position + transform.forward + (transform.up/5), transform.rotation) as Transform;
+			currentGrapple.GetComponent<Grapple> ().addParent (transform);
 		}
-
-		grappled = true;
-        currentGrapple = Instantiate(grapple, transform.position + transform.forward, transform.rotation) as Transform;
-        currentGrapple.GetComponent<Grapple>().addParent(transform);
     }
 }
