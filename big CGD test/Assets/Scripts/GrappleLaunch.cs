@@ -14,13 +14,22 @@ public class GrappleLaunch : MonoBehaviour {
         {
             fireGrapple();
         }
+
+		if (Input.GetKeyDown(KeyCode.P))
+		{
+			fireGrapple();
+		}
+
+
 	}
 
     void fireGrapple()
     {
 		if (grappled) {
-			currentGrapple.GetComponent<Grapple> ().removeChildren ();
-			Destroy (currentGrapple.gameObject);
+			if (currentGrapple != null) {
+				currentGrapple.GetComponent<Grapple> ().removeChildren ();
+				Destroy (currentGrapple.gameObject);
+			}
 			grappled = false;
 		} else {
 			grappled = true;
@@ -28,4 +37,10 @@ public class GrappleLaunch : MonoBehaviour {
 			currentGrapple.GetComponent<Grapple> ().addParent (transform);
 		}
     }
+
+	public void resetGrappled()
+	{
+		grappled = false;
+	}
+
 }

@@ -9,31 +9,46 @@ public class Grapple : MonoBehaviour {
 
     Rigidbody rb;
 	public bool hit = false;
+	public GrappleRopeManager myRopeManager;
 
+
+	public float maxDistance;
     float distance = 0;
 
 	void Start ()
     {
+
+		myRopeManager.myCar = myCar.gameObject;
+		this.GetComponent<NodeControler> ().target = myCar.gameObject;
+
         rb = GetComponent<Rigidbody>();
 
-        rb.velocity += transform.forward * 8;
-        rb.velocity += Vector3.up * 2;
+		rb.velocity += transform.forward * 8 + myCar.GetComponent<Rigidbody>().velocity;
+        rb.velocity += Vector3.up * 3;
     }
 
     void FixedUpdate()
     {
+
+		if (hit == false && Vector3.Distance (transform.position, myCar.position) > maxDistance) {
+			rb.velocity = Vector3.down * 2;
+		}
+
 		if (distance != 0 && Vector3.Distance(transform.position, myCar.position) > distance)
         {
             //Vector3 targToCar = myCar.position - transform.parent.position;
             //targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
             //transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
 
-            Debug.Log("yh");
+            //Debug.Log("yh");
 
             Vector3 targToCar = transform.position - myCar.position;
             targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
             myCar.GetComponent<Rigidbody>().velocity += targToCar*100;
         }
+
+
+
     }
 
     public void addParent(Transform car)
