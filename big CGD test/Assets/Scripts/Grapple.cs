@@ -22,15 +22,17 @@ public class Grapple : MonoBehaviour {
 
     void FixedUpdate()
     {
-		if (distance != 0 && Vector3.Distance(transform.parent.position, myCar.position) > distance)
+		if (distance != 0 && Vector3.Distance(transform.position, myCar.position) > distance)
         {
             //Vector3 targToCar = myCar.position - transform.parent.position;
             //targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
             //transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
 
+            Debug.Log("yh");
+
             Vector3 targToCar = transform.position - myCar.position;
-            targToCar = new Vector3(targToCar.x / 20, targToCar.y / 20, targToCar.z / 20);
-            myCar.GetComponent<Rigidbody>().velocity += targToCar;
+            targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
+            myCar.GetComponent<Rigidbody>().velocity += targToCar*100;
         }
     }
 
@@ -56,9 +58,9 @@ public class Grapple : MonoBehaviour {
             GetComponent<Collider>().isTrigger = true;
             transform.parent = col.transform;
 
-            distance = Vector3.Distance(col.transform.position, myCar.position);
+            distance = Vector3.Distance(transform.position, myCar.position);
 
-            makeChain();
+            //makeChain();
         }
     }
 

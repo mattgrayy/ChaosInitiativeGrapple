@@ -24,7 +24,7 @@ public class GrappleLaunch : MonoBehaviour {
 			grappled = false;
 		} else {
 			grappled = true;
-			currentGrapple = Instantiate (grapple, transform.position + transform.forward + (transform.up/5), transform.rotation) as Transform;
+			currentGrapple = Instantiate (grapple, transform.parent.position + transform.parent.forward + (transform.parent.up/5), transform.parent.rotation) as Transform;
 			currentGrapple.GetComponent<Grapple> ().addParent (transform);
 		}
     }
