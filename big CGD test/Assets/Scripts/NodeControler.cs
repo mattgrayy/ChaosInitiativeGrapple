@@ -30,7 +30,7 @@ public class NodeControler : MonoBehaviour {
 
 		RaycastHit hit;
 		//ray to target
-			if (Physics.Raycast (transform.position, target.transform.position - transform.position, out hit, 15f)) {
+			if (Physics.Raycast (transform.position, target.transform.position - transform.position, out hit)) {
 
 
 

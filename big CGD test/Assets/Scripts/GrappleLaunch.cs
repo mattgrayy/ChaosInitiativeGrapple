@@ -27,8 +27,10 @@ public class GrappleLaunch : MonoBehaviour {
     {
 		if (grappled) {
 			if (currentGrapple != null) {
-				currentGrapple.GetComponent<Grapple> ().removeChildren ();
-				Destroy (currentGrapple.gameObject);
+                //currentGrapple.GetComponent<Grapple> ().removeChildren ();
+                currentGrapple.GetComponent<GrappleRopeManager>().killAll = true;
+                //Destroy (currentGrapple.gameObject);
+                currentGrapple = null;
 			}
 			grappled = false;
 		} else {
