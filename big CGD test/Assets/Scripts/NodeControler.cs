@@ -12,16 +12,6 @@ public class NodeControler : MonoBehaviour {
 
 	void Update () {
 
-		if (myMan.killAll) {
-
-			if (lastNode) {
-				target.GetComponent<GrappleLaunch> ().resetGrappled ();
-			}
-
-			Destroy (this.gameObject);
-		}
-
-
 		if (target != null)
 		{
 		rope.SetPosition (0, transform.position);
@@ -38,11 +28,10 @@ public class NodeControler : MonoBehaviour {
 
 					Vector3 spawnPoint = (Vector3.Normalize (hit.point - hit.transform.position)/5) + hit.point;
 					spawnPoint.y = hit.point.y;
-					Debug.Log (hit.collider.name);
 
 					//create a node at hit position
 					GameObject thing = Instantiate (node, spawnPoint, Quaternion.identity) as GameObject;
-					myMan.numberOfNodes++;
+                    myMan.addNode(thing);
 					thing.GetComponent<NodeControler> ().myMan = myMan;
 					thing.transform.parent = hit.transform;
 					thing.GetComponent<NodeControler> ().target = target;

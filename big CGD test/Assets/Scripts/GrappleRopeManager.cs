@@ -1,26 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GrappleRopeManager : MonoBehaviour {
 
+    List<GameObject> nodes = new List<GameObject>();
 
-	public GameObject myCar;
-	public int numberOfNodes;
-	public bool killAll = false;
-
-
-	//lenght of rope
-	//all the nodes (it knows the grapple as its attached to it)
-
+    public GameObject myCar;
 
 	void Update () {
 
-		if (numberOfNodes > 3) {
-			killAll = true;
+		if (nodes.Count > 3)
+        {
+            killNodes();
 		}
-
-
 	}
 
+    public void addNode(GameObject node)
+    {
+        nodes.Add(node);
+    }
 
+    public void killNodes()
+    {
+        foreach (GameObject node in nodes)
+        {
+            Destroy(node);
+        }
+        Destroy(gameObject);
+    }
 }
