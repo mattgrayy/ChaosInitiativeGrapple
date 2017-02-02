@@ -9,9 +9,9 @@ public class GrappleRopeManager : MonoBehaviour {
 
 	void Update () {
 
-		if (nodes.Count > 3)
+		if (nodes.Count > 10)
         {
-            killNodes();
+            killAllNodes();
 		}
 	}
 
@@ -20,12 +20,28 @@ public class GrappleRopeManager : MonoBehaviour {
         nodes.Add(node);
     }
 
-    public void killNodes()
+    public void killAllNodes()
     {
         foreach (GameObject node in nodes)
         {
             Destroy(node);
         }
         Destroy(gameObject);
+    }
+
+    public void killNode(GameObject TN)
+    {
+        int u=0;
+        for (int c = 0; c<nodes.Count; c++)
+        {
+          
+            if (nodes[c] == TN)
+            {
+                u = c;
+               
+            }
+        }
+        Destroy(nodes[u]);
+        nodes.RemoveAt(u);
     }
 }

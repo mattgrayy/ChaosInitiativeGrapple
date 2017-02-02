@@ -28,7 +28,8 @@ public class GrappleLaunch : MonoBehaviour {
 		if (grappled) {
 			if (currentGrapple != null)
             {
-                currentGrapple.GetComponent<GrappleRopeManager>().killNodes();
+                currentGrapple.GetComponent<GrappleRopeManager>().killAllNodes();
+            
                 currentGrapple = null;
 			}
 			grappled = false;
