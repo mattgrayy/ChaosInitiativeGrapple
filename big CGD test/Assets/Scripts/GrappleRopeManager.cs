@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 public class GrappleRopeManager : MonoBehaviour {
 
-    List<GameObject> nodes = new List<GameObject>();
+    public List<GameObject> nodes = new List<GameObject>();
 
     public GameObject myCar;
+    public GameObject lastNode;
 
 	void Update () {
 
@@ -15,9 +16,27 @@ public class GrappleRopeManager : MonoBehaviour {
 		}
 	}
 
+    public float calculateRopeLength()
+    {
+        float length = 0;
+
+        foreach (GameObject node in nodes)
+        {
+            length += node.GetComponent<NodeControler>().ropeLength;
+        }
+        length += GetComponent<NodeControler>().ropeLength;
+
+        return length;
+    }
+
     public void addNode(GameObject node)
     {
         nodes.Add(node);
+    }
+
+    public void setLastNode(GameObject node)
+    {
+        lastNode = node;
     }
 
     public void killAllNodes()
@@ -31,17 +50,17 @@ public class GrappleRopeManager : MonoBehaviour {
 
     public void killNode(GameObject TN)
     {
-        int u=0;
-        for (int c = 0; c<nodes.Count; c++)
+        int targetIndex = 0;
+        for (int i = 0; i < nodes.Count; i++)
         {
           
-            if (nodes[c] == TN)
+            if (nodes[i] == TN)
             {
-                u = c;
+                targetIndex = i;
                
             }
         }
-        Destroy(nodes[u]);
-        nodes.RemoveAt(u);
+        Destroy(nodes[targetIndex]);
+        nodes.RemoveAt(targetIndex);
     }
 }

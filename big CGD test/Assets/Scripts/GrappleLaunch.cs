@@ -4,7 +4,7 @@ using System.Collections;
 public class GrappleLaunch : MonoBehaviour {
 
     [SerializeField] Transform grapple;
-	Transform currentGrapple;
+	[SerializeField] Transform currentGrapple;
 
     bool grappled = false;
 
@@ -25,7 +25,8 @@ public class GrappleLaunch : MonoBehaviour {
 
     void fireGrapple()
     {
-		if (grappled) {
+		if (grappled)
+        {
 			if (currentGrapple != null)
             {
                 currentGrapple.GetComponent<GrappleRopeManager>().killAllNodes();
@@ -33,7 +34,9 @@ public class GrappleLaunch : MonoBehaviour {
                 currentGrapple = null;
 			}
 			grappled = false;
-		} else {
+		}
+        else
+        {
 			grappled = true;
 			currentGrapple = Instantiate (grapple, transform.parent.position + transform.parent.forward + (transform.parent.up/5), transform.parent.rotation) as Transform;
 			currentGrapple.GetComponent<Grapple> ().addParent (transform);

@@ -11,7 +11,6 @@ public class Grapple : MonoBehaviour {
 	public bool hit = false;
 	public GrappleRopeManager myRopeManager;
 
-
 	public float maxDistance;
     float distance = 0;
 
@@ -29,26 +28,28 @@ public class Grapple : MonoBehaviour {
 
     void FixedUpdate()
     {
-
-		if (hit == false && Vector3.Distance (transform.position, myCar.position) > maxDistance) {
+        //drop if we reach max rope length
+		if (hit == false && Vector3.Distance (transform.position, myCar.position) > maxDistance)
+        {
 			rb.velocity = Vector3.down * 2;
 		}
 
-		if (distance != 0 && Vector3.Distance(transform.position, myCar.position) > distance)
+        float ropeLength = myRopeManager.calculateRopeLength();
+        
+
+		if (distance != 0 && ropeLength > distance)
         {
             //Vector3 targToCar = myCar.position - transform.parent.position;
             //targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
             //transform.parent.GetComponent<Rigidbody>().velocity += targToCar;
 
-            //Debug.Log("yh");
+            // this is the car that launched the grapples' nearest node on the rope.
+            GameObject nearestNode = myRopeManager.lastNode;
 
-            Vector3 targToCar = transform.position - myCar.position;
-            targToCar = new Vector3(targToCar.x / 2, targToCar.y / 2, targToCar.z / 2);
-            myCar.GetComponent<Rigidbody>().velocity += targToCar*100;
+            Vector3 carToNearestNode = nearestNode.transform.position - myCar.position;
+            carToNearestNode = new Vector3(carToNearestNode.x / 2, carToNearestNode.y / 2, carToNearestNode.z / 2);
+            myCar.GetComponent<Rigidbody>().velocity += carToNearestNode * 100;
         }
-
-
-
     }
 
     public void addParent(Transform car)
@@ -66,7 +67,7 @@ public class Grapple : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if (/*col.transform.tag == "Draggable" &&*/ !hit)
+        if (!hit)
         {
 			hit = true;
             rb.isKinematic = true;
